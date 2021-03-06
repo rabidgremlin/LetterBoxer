@@ -4,6 +4,7 @@ using UnityEngine;
 [CustomEditor(typeof(LetterBoxer))]
 public class LetterBoxerEditor : Editor
 {
+    SerializedProperty matteColorProp;
     SerializedProperty referenceModeProp;
     SerializedProperty xProp;
     SerializedProperty yProp;
@@ -15,6 +16,7 @@ public class LetterBoxerEditor : Editor
 
     void OnEnable()
     {
+        matteColorProp = serializedObject.FindProperty("matteColor");
         referenceModeProp = serializedObject.FindProperty("referenceMode");
         xProp = serializedObject.FindProperty("x");
         yProp = serializedObject.FindProperty("y");
@@ -26,7 +28,8 @@ public class LetterBoxerEditor : Editor
 
     override public void OnInspectorGUI()
     {
-        serializedObject.Update();        
+        serializedObject.Update();
+        EditorGUILayout.PropertyField(matteColorProp, new GUIContent("Matte Color", "The color to use for the matte bars"));
         EditorGUILayout.PropertyField(referenceModeProp, new GUIContent("Reference Mode", "Toggles whether you want to use an aspect ratio or a resolution to calculate the letterboxing"));
 
         LetterBoxer.ReferenceMode currentReferenceMode = (LetterBoxer.ReferenceMode)referenceModeProp.enumValueIndex;
